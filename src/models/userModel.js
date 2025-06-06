@@ -1,6 +1,4 @@
-import mongoose, { mongo } from "mongoose";
-import { unique } from "next/dist/build/utils";
-import { type } from "os";
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -9,13 +7,13 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   email: {
-    type: email,
+    type: String,
     required: [true, "Please provide an email"],
     unique: true,
   },
   password: {
     type: String,
-    required: [true, "Please provide password"],
+    required: [true, "Please provide a password"],
   },
   isVerified: {
     type: Boolean,
@@ -25,12 +23,24 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  forgotPasswordToken: String,
-  forgotPasswordTokenExpiry: Date,
-  verifyToken: String,
-  verifyTokenExpiry: Date,
+  forgotPasswordToken: {
+    type: String,
+    default: null,
+  },
+  forgotPasswordTokenExpiry: {
+    type: Date,
+    default: null,
+  },
+  verifyToken: {
+    type: String,
+    default: null,
+  },
+  verifyTokenExpiry: {
+    type: Date,
+    default: null,
+  },
 });
 
-const User = mongoose.models.users || mongoose.model("users", userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;
